@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#0f172a,#1e293b);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:30px;
+        }
+
+        .container{
+            width:100%;
+            max-width:1000px;
+            background:rgba(255,255,255,0.08);
+            border-radius:25px;
+            padding:40px;
+            backdrop-filter:blur(15px);
+            box-shadow:0 8px 32px rgba(0,0,0,0.3);
+            color:white;
+        }
+
+        .title{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .title h1{
+            font-size:40px;
+            color:#38bdf8;
+            margin-bottom:10px;
+        }
+
+        .title p{
+            color:#cbd5e1;
+            font-size:18px;
+        }
+
+        form{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:20px;
+        }
+
+        .input-box{
+            display:flex;
+            flex-direction:column;
+        }
+
+        .input-box label{
+            margin-bottom:8px;
+            color:#e2e8f0;
+        }
+
+        .input-box input{
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            outline:none;
+            background:rgba(255,255,255,0.12);
+            color:white;
+            font-size:16px;
+        }
+
+        .input-box input::placeholder{
+            color:#cbd5e1;
+        }
+
+        .btn-container{
+            grid-column:span 2;
+            text-align:center;
+            margin-top:10px;
+        }
+
+        button{
+            background:#38bdf8;
+            color:white;
+            padding:15px 40px;
+            border:none;
+            border-radius:15px;
+            font-size:18px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#0ea5e9;
+            transform:scale(1.05);
+        }
+
+        .result{
+            margin-top:30px;
+            text-align:center;
+            font-size:28px;
+            font-weight:bold;
+            color:#22c55e;
+        }
+
+        @media(max-width:768px){
+
+            form{
+                grid-template-columns:1fr;
+            }
+
+            .btn-container{
+                grid-column:span 1;
+            }
+
+            .title h1{
+                font-size:32px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="title">
+            <h1>❤️ Heart Disease Prediction</h1>
+            <p>AI-Based Medical Prediction System</p>
+        </div>
+
+        <form action="/predict" method="POST">
+
+            <div class="input-box">
+                <label>Age</label>
+                <input type="number" name="age" placeholder="Enter Age" required>
+            </div>
+
+            <div class="input-box">
+                <label>Sex (1 = Male, 0 = Female)</label>
+                <input type="number" name="sex" placeholder="Enter Sex" required>
+            </div>
+
+            <div class="input-box">
+                <label>Chest Pain Type (cp)</label>
+                <input type="number" name="cp" placeholder="Enter cp" required>
+            </div>
+
+            <div class="input-box">
+                <label>Resting Blood Pressure</label>
+                <input type="number" name="trestbps" placeholder="Enter BP" required>
+            </div>
+
+            <div class="input-box">
+                <label>Cholesterol</label>
+                <input type="number" name="chol" placeholder="Enter Cholesterol" required>
+            </div>
+
+            <div class="input-box">
+                <label>Fasting Blood Sugar</label>
+                <input type="number" name="fbs" placeholder="Enter fbs" required>
+            </div>
+
+            <div class="input-box">
+                <label>Rest ECG</label>
+                <input type="number" name="restecg" placeholder="Enter restecg" required>
+            </div>
+
+            <div class="input-box">
+                <label>Maximum Heart Rate</label>
+                <input type="number" name="thalach" placeholder="Enter thalach" required>
+            </div>
+
+            <div class="input-box">
+                <label>Exercise Angina</label>
+                <input type="number" name="exang" placeholder="Enter exang" required>
+            </div>
+
+            <div class="input-box">
+                <label>Oldpeak</label>
+                <input type="number" step="any" name="oldpeak" placeholder="Enter oldpeak" required>
+            </div>
+
+            <div class="input-box">
+                <label>Slope</label>
+                <input type="number" name="slope" placeholder="Enter slope" required>
+            </div>
+
+            <div class="input-box">
+                <label>CA</label>
+                <input type="number" name="ca" placeholder="Enter ca" required>
+            </div>
+
+            <div class="input-box">
+                <label>Thal</label>
+                <input type="number" name="thal" placeholder="Enter thal" required>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit">
+                    Predict Now
+                </button>
+            </div>
+
+        </form>
+
+        {% if prediction_text %}
+
+        <div class="result">
+
+            {{ prediction_text }}
+
+            <br><br>
+
+            {% if "No Heart Disease" in prediction_text %}
+
+                Safe Probability:
+                {{ probability }}%
+
+            {% else %}
+
+                Disease Probability:
+                {{ probability }}%
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
